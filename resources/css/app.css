@@ -8,37 +8,37 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Re-assign Flux's gray of choice... */
+/* Re-assign Flux's gray to el color institucional azul oscuro */
 @theme {
-    --color-zinc-50: var(--color-stone-50);
-    --color-zinc-100: var(--color-stone-100);
-    --color-zinc-200: var(--color-stone-200);
-    --color-zinc-300: var(--color-stone-300);
-    --color-zinc-400: var(--color-stone-400);
-    --color-zinc-500: var(--color-stone-500);
-    --color-zinc-600: var(--color-stone-600);
-    --color-zinc-700: var(--color-stone-700);
-    --color-zinc-800: var(--color-stone-800);
-    --color-zinc-900: var(--color-stone-900);
-    --color-zinc-950: var(--color-stone-950);
+    --color-zinc-50: #001E4C;
+    --color-zinc-100: #001E4C;
+    --color-zinc-200: #001E4C;
+    --color-zinc-300: #001E4C;
+    --color-zinc-400: #001E4C;
+    --color-zinc-500: #001E4C;
+    --color-zinc-600: #001E4C;
+    --color-zinc-700: #001E4C;
+    --color-zinc-800: #001E4C;
+    --color-zinc-900: #001E4C;
+    --color-zinc-950: #001E4C;
 }
 
+/* Nuevo acento amarillo institucional: #B88900 */
 @theme {
-    --color-accent: var(--color-rose-500);
-    --color-accent-content: var(--color-rose-500);
-    --color-accent-foreground: var(--color-white);
+    --color-accent: #B88900;
+    --color-accent-content: #B88900;
+    --color-accent-foreground: #001E4C;
 }
 
 @layer theme {
     .dark {
-        --color-accent: var(--color-rose-500);
-        --color-accent-content: var(--color-rose-400);
-        --color-accent-foreground: var(--color-white);
+        --color-accent: #B88900;
+        --color-accent-content: #B88900;
+        --color-accent-foreground: #001E4C;
     }
 }
 
 @layer base {
-
     *,
     ::after,
     ::before,
@@ -53,13 +53,26 @@
 }
 
 [data-flux-label] {
-    @apply  !mb-0 !leading-tight;
+    @apply !mb-0 !leading-tight;
 }
 
 input:focus[data-flux-control],
 textarea:focus[data-flux-control],
 select:focus[data-flux-control] {
     @apply outline-hidden ring-2 ring-accent ring-offset-2 ring-offset-accent-foreground;
+}
+
+
+/* Azul institucional */
+.text-insti-azul {
+    color: #001E4C;
+    font-weight: bold;
+}
+
+/* Amarillo institucional */
+.text-insti-amarillo {
+    color: #B88900;
+    font-weight: bold;
 }
 
 /* \[:where(&)\]:size-4 {
