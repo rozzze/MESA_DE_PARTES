@@ -145,65 +145,99 @@
         </div>
     </div>
 
-    {{-- 🎯 Contenedor de Acciones de Revisión --}}
-    <div class="bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden">
-        {{-- Patrón de fondo sutil --}}
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#0477BF]/10 to-[#002D64]/10 rounded-full blur-xl"></div>
+    {{---
+    | IMPORTANTE: Esta es la sección que debes controlar.
+    | Sólo debe mostrarse si la solicitud está en estado 'pendiente'.
+    ---}}
+    @if ($documentRequest->estado === 'pendiente')
+        <div class="bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+            {{-- Patrón de fondo sutil --}}
+            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#0477BF]/10 to-[#002D64]/10 rounded-full blur-xl"></div>
 
-        <div class="relative z-10">
-            <div class="flex items-center gap-3 mb-6">
-                <div class="p-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] rounded-lg shadow-md">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"/>
-                    </svg>
-                </div>
-                <h2 class="text-xl font-semibold text-[#0D0D0D] dark:text-white">{{ __('Acciones de Revisión') }}</h2>
-            </div>
-
-            <flux:separator variant="subtle" class="mb-6" />
-
-            <div class="space-y-6">
-                {{-- Campo de observaciones --}}
-                <div>
-                    <flux:textarea 
-                        wire:model.defer="descripcion" 
-                        label="Observaciones (opcional)" 
-                        placeholder="Añade cualquier observación o comentario sobre la revisión..." 
-                        rows="4" />
-                </div>
-
-                {{-- Campo de subida de archivo --}}
-                <div>
-                    <flux:input 
-                        wire:model="pdf_respuesta" 
-                        type="file" 
-                        label="Subir Documento de Respuesta (PDF)" />
-                    @error('pdf_respuesta') 
-                        <span class="mt-2 text-red-600 text-sm">{{ $message }}</span> 
-                    @enderror
-                </div>
-
-                {{-- Botones de acción --}}
-                <div class="flex flex-col sm:flex-row gap-4 pt-4">
-                    <button wire:click="aprobar" 
-                            class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:ring-4 focus:outline-none focus:ring-green-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            <div class="relative z-10">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="p-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] rounded-lg shadow-md">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002 2m-6 9l2 2 4-4"/>
                         </svg>
-                        <span>{{ __('Aprobar Solicitud') }}</span>
-                    </button>
+                    </div>
+                    <h2 class="text-xl font-semibold text-[#0D0D0D] dark:text-white">{{ __('Acciones de Revisión') }}</h2>
+                </div>
 
-                    <button wire:click="rechazar" 
-                            class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:ring-4 focus:outline-none focus:ring-red-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
-                        <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                        </svg>
-                        <span>{{ __('Rechazar Solicitud') }}</span>
-                    </button>
+                <flux:separator variant="subtle" class="mb-6" />
+
+                <div class="space-y-6">
+                    {{-- Campo de observaciones --}}
+                    <div>
+                        <flux:textarea 
+                            wire:model.defer="descripcion" 
+                            label="Observaciones (opcional)" 
+                            placeholder="Añade cualquier observación o comentario sobre la revisión..." 
+                            rows="4" />
+                    </div>
+
+                    {{-- Campo de subida de archivo --}}
+                    <div>
+                        <flux:input 
+                            wire:model="pdf_respuesta" 
+                            type="file" 
+                            label="Subir Documento de Respuesta (PDF)" />
+                        @error('pdf_respuesta') 
+                            <span class="mt-2 text-red-600 text-sm">{{ $message }}</span> 
+                        @enderror
+                    </div>
+
+                    {{-- Botones de acción --}}
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <button wire:click="aprobar" 
+                                class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:ring-4 focus:outline-none focus:ring-green-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>{{ __('Aprobar Solicitud') }}</span>
+                        </button>
+
+                        <button wire:click="rechazar" 
+                                class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:ring-4 focus:outline-none focus:ring-red-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+                            <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            <span>{{ __('Rechazar Solicitud') }}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @else
+        {{-- Mensaje para solicitudes ya procesadas --}}
+        <div class="bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden text-center">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
+            <div class="p-4 bg-gray-100 dark:bg-gray-800 rounded-full w-16 h-16 mx-auto mb-4">
+                <svg class="w-8 h-8 text-gray-400 dark:text-gray-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                </svg>
+            </div>
+            <p class="text-gray-600 dark:text-gray-400 font-medium text-lg">
+                {{ __('Esta solicitud ya ha sido ') }}
+                <span class="font-semibold @if($documentRequest->estado === 'aprobado') text-green-600 @else text-red-600 @endif">
+                    {{ ucfirst($documentRequest->estado) }}
+                </span>
+                {{ __('. No se requieren más acciones.') }}
+            </p>
+            @if($documentRequest->pdf_respuesta)
+                <div class="mt-4">
+                    <a href="{{ Storage::url($documentRequest->pdf_respuesta) }}" target="_blank"
+                       class="inline-flex items-center px-6 py-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] text-white text-base font-medium rounded-lg hover:from-[#002D64] hover:to-[#0477BF] transition-all duration-300 transform hover:scale-105 shadow-md">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/>
+                        </svg>
+                        {{ __('Ver Documento de Respuesta') }}
+                    </a>
+                </div>
+            @endif
+        </div>
+    @endif
+
 
     {{-- 🎯 Mensajes de Sesión --}}
     @if (session()->has('success'))
