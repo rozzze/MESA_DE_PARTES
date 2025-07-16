@@ -25,29 +25,31 @@
         </div>
     @endsession
 
-    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
-        
-        <div class="flex-1 relative z-10">
-            <div class="flex items-center gap-3 mb-2">
-                <div class="p-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] rounded-lg shadow-md">
-                    <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                    </svg>
+        @can('crear-usuario')
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
+            
+            <div class="flex-1 relative z-10">
+                <div class="flex items-center gap-3 mb-2">
+                    <div class="p-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] rounded-lg shadow-md">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold text-[#0D0D0D] dark:text-white">Gestión de Usuarios</h3>
                 </div>
-                <h3 class="text-lg font-semibold text-[#0D0D0D] dark:text-white">Gestión de Usuarios</h3>
+                <p class="text-sm text-gray-600 dark:text-gray-400 ml-12">Administra los usuarios del sistema de forma eficiente</p>
             </div>
-            <p class="text-sm text-gray-600 dark:text-gray-400 ml-12">Administra los usuarios del sistema de forma eficiente</p>
+            
+            <a href="{{ route('users.create') }}"
+            class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#B88900] to-[#F2C84B] hover:from-[#B88900] hover:to-[#F2CB05] focus:ring-4 focus:outline-none focus:ring-[#F2CB05]/50 dark:focus:ring-[#B88900]/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl relative z-10">
+                <svg class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                </svg>
+                <span class="relative">Crear Usuario</span>
+            </a>
         </div>
-        
-        <a href="{{ route('users.create') }}"
-           class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#B88900] to-[#F2C84B] hover:from-[#B88900] hover:to-[#F2CB05] focus:ring-4 focus:outline-none focus:ring-[#F2CB05]/50 dark:focus:ring-[#B88900]/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl relative z-10">
-            <svg class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-            </svg>
-            <span class="relative">Crear Usuario</span>
-        </a>
-    </div>
+        @endcan
 
     <div class="bg-white dark:bg-[#0D0D0D] rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800">
         <div class="bg-gradient-to-r from-[#002D64] to-[#0F3D59] px-6 py-4 relative">
@@ -103,16 +105,20 @@
                                        class="text-white bg-[#002D64] hover:bg-[#0F3D59] focus:ring-4 focus:outline-none focus:ring-[#0477BF]/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                         Mostrar
                                     </a>
+                                    @can('editar-usuario')
                                     <a href="{{ route('users.edit', $user->id) }}"
                                        class="text-white bg-[#0477BF] hover:bg-[#002D64] focus:ring-4 focus:outline-none focus:ring-blue-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                         Editar
                                     </a>
+                                    @endcan
+                                    @can('eliminar-usuario')
                                     <button wire:click="delete({{ $user->id }})"
                                             wire:confirm="Estas seguro de eliminar?"
                                             type="button"
                                             class="text-white bg-[#F20519] hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                         Eliminar
                                     </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>

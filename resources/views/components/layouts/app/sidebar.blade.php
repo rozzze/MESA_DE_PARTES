@@ -18,29 +18,41 @@
                     <span class="font-bold">{{ __('Dashboard') }}</span>
                 </flux:navlist.item>
 
-                <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>
-                    <span class="font-bold">{{ __('Users') }}</span>
-                </flux:navlist.item>
+                @can('ver-usuarios')
+                    <flux:navlist.item icon="users" :href="route('users.index')" :current="request()->routeIs('users.index')" wire:navigate>
+                        <span class="font-bold">{{ __('Usuarios') }}</span>
+                    </flux:navlist.item>
+                @endcan
 
+                @can('ver-requisitos')
                 <flux:navlist.item icon="clipboard-document-list" :href="route('requirements.index')" :current="request()->routeIs('requirements.index')" wire:navigate>
-                    <span class="font-bold">{{ __('Requerimientos') }}</span>
+                    <span class="font-bold">{{ __('Requisitos') }}</span>
                 </flux:navlist.item>
+                @endcan
 
+                @can('ver-documentos')
                 <flux:navlist.item icon="document-chart-bar" :href="route('doctype.index')" :current="request()->routeIs('doctype.index')" wire:navigate>
                     <span class="font-bold">{{ __('Documentos Disponibles') }}</span>
                 </flux:navlist.item>
+                @endcan
 
+                @can('ver-mis-solicitudes')
                 <flux:navlist.item icon="document-text" :href="route('solicitudes.index')" :current="request()->routeIs('solicitudes.index')" wire:navigate>
-                    <span class="font-bold">{{ __('Solicitudes Disponibles') }}</span>
+                    <span class="font-bold">{{ __('Mis Solicitudes') }}</span>
                 </flux:navlist.item>
+                @endcan
 
+                @can('ver-solicitudes')
                 <flux:navlist.item icon="building-library" :href="route('documentreviews.index')" :current="request()->routeIs('documentreviews.index')" wire:navigate>
                     <span class="font-bold">{{ __('Administracion') }}</span>
                 </flux:navlist.item>
+                @endcan
 
+                @can('administrar-roles')
                 <flux:navlist.item icon="link-slash" :href="route('roles.index')" :current="request()->routeIs('roles.index')" wire:navigate>
                     <span class="font-bold">{{ __('Roles') }}</span>
                 </flux:navlist.item>
+                @endcan
             </flux:navlist.group>
         </flux:navlist>
 

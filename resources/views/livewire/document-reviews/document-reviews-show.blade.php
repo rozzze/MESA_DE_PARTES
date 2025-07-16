@@ -189,6 +189,7 @@
 
                     {{-- Botones de acción --}}
                     <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        @can('aprobar-solicitud')
                         <button wire:click="aprobar" 
                                 class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 focus:ring-4 focus:outline-none focus:ring-green-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +197,9 @@
                             </svg>
                             <span>{{ __('Aprobar Solicitud') }}</span>
                         </button>
+                        @endcan
 
+                        @can('rechazar-solicitud')
                         <button wire:click="rechazar" 
                                 class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700 focus:ring-4 focus:outline-none focus:ring-red-500/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                             <svg class="w-5 h-5 mr-2 transition-transform group-hover:scale-110" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -204,6 +207,7 @@
                             </svg>
                             <span>{{ __('Rechazar Solicitud') }}</span>
                         </button>
+                        @endcan
                     </div>
                 </div>
             </div>

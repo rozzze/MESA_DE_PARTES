@@ -25,7 +25,8 @@
             </div>
         @endsession
 
-        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden mt-6">
+        @can('crear-requisito')
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden mt-6">
             <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
             
             <div class="flex-1 relative z-10">
@@ -50,6 +51,7 @@
                 <span class="relative">Crear Requerimiento</span>
             </a>
         </div>
+        @endcan
 
 
         <div class="bg-white dark:bg-[#0D0D0D] rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 mt-6">
@@ -90,17 +92,21 @@
                                 <td class="px-6 py-4 text-gray-800 dark:text-gray-200">{{ $requirement->descripcion }}</td>
                                 <td class="px-6 py-4">
                                     <div class="flex flex-wrap gap-2 justify-center">
+                                        @can('editar-requisito')
                                         <a href="{{ route('requirements.edit', $requirement->id) }}"
                                            class="text-white bg-[#0477BF] hover:bg-[#002D64] focus:ring-4 focus:outline-none focus:ring-blue-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                             Editar
                                         </a>
+                                        @endcan
 
+                                        @can('eliminar-requisito')
                                         <button wire:click="delete({{ $requirement->id }})"
                                                 wire:confirm="¿Estás seguro de eliminar?"
                                                 type="button"
                                                 class="text-white bg-[#F20519] hover:bg-red-600 focus:ring-4 focus:outline-none focus:ring-red-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                             Eliminar
                                         </button>
+                                        @endcan
                                     </div>
                                 </td>
                             </tr>

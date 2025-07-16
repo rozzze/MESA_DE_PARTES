@@ -27,6 +27,7 @@
         <div class="flex-1 flex flex-col sm:flex-row gap-4 relative z-10 items-center justify-start">
             <h3 class="text-lg font-semibold text-[#0D0D0D] dark:text-white mr-4 hidden sm:block">Acciones Rápidas:</h3>
 
+            @can('crear-solicitud')
             <a href="{{ route('docrequest.create') }}" 
                class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#0477BF] to-[#002D64] hover:from-[#002D64] hover:to-[#0477BF] focus:ring-4 focus:outline-none focus:ring-[#0477BF]/50 dark:focus:ring-[#002D64]/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 <svg class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -34,6 +35,7 @@
                 </svg>
                 <span>Nueva Solicitud</span>
             </a>
+            @endcan
 
             @if(auth()->user()->hasRole('ADMIN'))
                 <a href="{{ route('documentreviews.index') }}" 

@@ -123,10 +123,12 @@
                             </td>
                             <td class="px-6 py-4 text-gray-800 dark:text-gray-200">{{ $solicitud->created_at->format('d/m/Y H:i') }}</td>
                             <td class="px-6 py-4">
+                                @can('atender-solicitud')
                                 <a href="{{ route('documentreviews.show', $solicitud->id) }}"
                                    class="text-white bg-[#0477BF] hover:bg-[#002D64] focus:ring-4 focus:outline-none focus:ring-blue-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
                                     Mostrar
                                 </a>
+                                @endcan
                             </td>
                         </tr>
                     @empty
