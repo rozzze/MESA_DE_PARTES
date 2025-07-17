@@ -19,7 +19,7 @@ class DocumentTypeIndex extends Component
         // Carga todos los roles disponibles una sola vez al montar el componente
         $this->roles = Role::all();
         // Llama al método para cargar los tipos de documento inicialmente
-        $this->loadDocumentTypes(); 
+        $this->loadDocumentTypes();
     }
 
     // Método para cargar y aplicar los filtros a los tipos de documento
@@ -50,6 +50,18 @@ class DocumentTypeIndex extends Component
         $this->loadDocumentTypes(); // Recarga los tipos de documento sin filtros
     }
 
+    // ***** NUEVO MÉTODO PARA MOSTRAR DESCRIPCIÓN *****
+    public function showDescription($id)
+    {
+        $docType = DocumentType::findOrFail($id);
+        // Retorna un array con el título y la descripción
+        return [
+            'title' => 'Descripción de ' . $docType->nombre,
+            'description' => $docType->descripcion,
+        ];
+    }
+    // ************************************************
+
     public function delete($id)
     {
         $docType = DocumentType::findOrFail($id);
@@ -63,8 +75,6 @@ class DocumentTypeIndex extends Component
 
     public function render()
     {
-        // No necesitas pasar $documentTypes y $roles aquí, ya son propiedades públicas
-        // y se inyectan automáticamente en la vista por Livewire.
         return view('livewire.document-type.document-type-index');
     }
 }

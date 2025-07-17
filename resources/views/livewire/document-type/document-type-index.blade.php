@@ -1,7 +1,7 @@
 <div class="w-full space-y-6">
     <div class="bg-gradient-to-r from-[#002D64] via-[#0F3D59] to-[#002D64] p-6 rounded-xl shadow-lg mb-6 relative overflow-hidden">
         <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-[#F2CB05] via-[#B88900] to-[#F2CB05]"></div>
-        
+
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-4 right-4 w-24 h-24 bg-[#F2CB05] rounded-full blur-3xl"></div>
             <div class="absolute bottom-4 left-4 w-16 h-16 bg-[#B88900] rounded-full blur-2xl"></div>
@@ -21,7 +21,7 @@
     <div>
         @session('success')
             <div class="animate-fadeIn">
-                <flux:callout variant="success" icon="check-circle" heading="{{ $value }}" 
+                <flux:callout variant="success" icon="check-circle" heading="{{ $value }}"
                     class="border-l-4 border-green-500 bg-green-50 dark:bg-green-900/20 rounded-r-lg shadow-lg transform transition-all duration-300 hover:scale-[1.02]" />
             </div>
         @endsession
@@ -30,7 +30,7 @@
         @can('crear-documento')
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white dark:bg-[#0D0D0D] p-6 rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden mt-6">
             <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
-            
+
             <div class="flex-1 relative z-10">
                 <div class="flex items-center gap-3 mb-2">
                     <div class="p-2 bg-gradient-to-r from-[#0477BF] to-[#002D64] rounded-lg shadow-md">
@@ -53,7 +53,7 @@
             </a>
         </div>
         @endcan
-        
+
         <div class="bg-white dark:bg-[#0D0D0D] rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 p-6 relative overflow-hidden mt-6">
             <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
 
@@ -91,16 +91,13 @@
             </div>
         </div>
 
-
-
-
         <div class="bg-white dark:bg-[#0D0D0D] rounded-2xl shadow-2xl overflow-hidden border border-gray-100 dark:border-gray-800 mt-6">
             <div class="bg-gradient-to-r from-[#002D64] to-[#0F3D59] px-6 py-4 relative">
                 <div class="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-[#F2CB05] via-[#B88900] to-[#F2CB05]"></div>
                 <div class="absolute inset-0 opacity-10">
                     <div class="absolute top-2 right-8 w-16 h-16 bg-[#F2CB05] rounded-full blur-2xl"></div>
                 </div>
-                
+
                 <h4 class="text-lg font-semibold text-white flex items-center relative z-10">
                     Lista de Tipos de Documento
                 </h4>
@@ -118,7 +115,7 @@
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @forelse ($documentTypes as $docType) {{-- Cambiado de @foreach a @forelse para el mensaje de "no resultados" --}}
+                        @forelse ($documentTypes as $docType)
                         <tr class="hover:bg-gradient-to-r hover:from-[#F2CB05]/5 hover:to-[#B88900]/5 dark:hover:bg-[#0F3D59]/20 transition-all duration-300 transform hover:translate-x-1">
                             <td class="px-6 py-4 font-medium text-[#0D0D0D] dark:text-white">{{ $docType->id }}</td>
                             <td class="px-6 py-4 text-gray-800 dark:text-gray-200">{{ $docType->nombre }}</td>
@@ -141,6 +138,28 @@
 
                             <td class="px-6 py-4">
                                 <div class="flex flex-wrap gap-2 justify-center">
+                                    {{-- ***** BOTÓN MOSTRAR SIMPLIFICADO ***** --}}
+                                    <button
+                                        wire:click="showDescription({{ $docType->id }})"
+                                        x-data="{}"
+                                        x-on:click="
+                                            // Llamar al método Livewire y manejar la respuesta con SweetAlert
+                                            $wire.showDescription({{ $docType->id }}).then(result => {
+                                                Swal.fire({
+                                                    title: result.title,
+                                                    text: result.description,
+                                                    icon: 'info',
+                                                    confirmButtonText: 'Cerrar'
+                                                });
+                                            });
+                                        "
+                                        type="button"
+                                        class="text-white bg-[#B88900] hover:bg-[#F2CB05] focus:ring-4 focus:outline-none focus:ring-yellow-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg"
+                                    >
+                                        Descripcion
+                                    </button>
+                                    {{-- ************************************** --}}
+
                                     @can('editar-documento')
                                     <a href="{{ route('doctype.edit', $docType->id) }}"
                                        class="text-white bg-[#0477BF] hover:bg-[#002D64] focus:ring-4 focus:outline-none focus:ring-blue-300/50 font-medium rounded-lg text-sm px-4 py-2 text-center transition-all duration-200 hover:scale-105 hover:shadow-lg">
@@ -171,3 +190,8 @@
         </div>
     </div>
 </div>
+
+{{-- Asegúrate de que SweetAlert2 esté importado en tu layout principal (app.blade.php) --}}
+{{-- por ejemplo, en tu app.blade.php: <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
+
+{{-- EL BLOQUE <style> PERSONALIZADO SE HA ELIMINADO PARA MANTENER LA SIMPLICIDAD --}}

@@ -2,7 +2,7 @@
     {{-- 🎯 Header de bienvenida --}}
     <div class="bg-gradient-to-r from-[#002D64] via-[#0F3D59] to-[#002D64] p-6 rounded-xl shadow-lg mb-6 relative overflow-hidden">
         {{-- Se eliminó la línea amarilla superior --}}
-        
+
         <div class="absolute inset-0 opacity-10">
             <div class="absolute top-4 right-4 w-24 h-24 bg-[#F2CB05] rounded-full blur-3xl"></div>
             <div class="absolute bottom-4 left-4 w-16 h-16 bg-[#B88900] rounded-full blur-2xl"></div>
@@ -20,15 +20,15 @@
         </div>
     </div>
 
-    
+
     <div class="flex flex-col sm:flex-row gap-4 mb-6 p-6 bg-white dark:bg-[#0D0D0D] rounded-2xl shadow-lg border border-gray-100 dark:border-gray-800 relative overflow-hidden">
         <div class="absolute top-0 right-0 w-24 h-24 bg-gradient-to-br from-[#F2CB05]/10 to-[#B88900]/10 rounded-full blur-xl"></div>
-        
+
         <div class="flex-1 flex flex-col sm:flex-row gap-4 relative z-10 items-center justify-start">
             <h3 class="text-lg font-semibold text-[#0D0D0D] dark:text-white mr-4 hidden sm:block">Acciones Rápidas:</h3>
 
             @can('crear-solicitud')
-            <a href="{{ route('docrequest.create') }}" 
+            <a href="{{ route('docrequest.create') }}"
                class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#0477BF] to-[#002D64] hover:from-[#002D64] hover:to-[#0477BF] focus:ring-4 focus:outline-none focus:ring-[#0477BF]/50 dark:focus:ring-[#002D64]/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                 <svg class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
@@ -38,7 +38,7 @@
             @endcan
 
             @if(auth()->user()->hasRole('ADMIN'))
-                <a href="{{ route('documentreviews.index') }}" 
+                <a href="{{ route('documentreviews.index') }}"
                    class="group relative inline-flex items-center justify-center px-8 py-3 overflow-hidden text-sm font-semibold text-white rounded-xl bg-gradient-to-r from-[#0F3D59] to-[#002D64] hover:from-[#002D64] hover:to-[#0F3D59] focus:ring-4 focus:outline-none focus:ring-[#0F3D59]/50 dark:focus:ring-[#002D64]/50 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
                     <svg class="w-5 h-5 mr-2 transition-transform group-hover:rotate-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
@@ -141,7 +141,7 @@
                 </div>
                 <h2 class="text-xl font-semibold text-[#0D0D0D] dark:text-white">Actividad Reciente</h2>
             </div>
-            
+
             <div class="space-y-4 max-h-64 overflow-y-auto relative z-10">
                 @foreach (\App\Models\DocumentRequest::latest()->take(5)->get() as $solicitud)
                     <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-100 dark:border-gray-700 hover:shadow-md transition-all duration-200 transform hover:scale-[1.01]">
@@ -168,7 +168,7 @@
                             <p class="text-sm font-medium text-[#0D0D0D] dark:text-white truncate">
                                 {{ $solicitud->user->name }}
                             </p>
-                            <p class="text-xs font-semibold 
+                            <p class="text-xs font-semibold
                                 @switch($solicitud->estado)
                                     @case('aprobado') text-[#0477BF] @break
                                     @case('rechazado') text-[#F20519] @break
@@ -197,11 +197,12 @@
                         window.solicitudesChartInstance.destroy();
                     }
 
-                    // Datos para el gráfico del usuario actual (solo sus solicitudes)
+                    // Datos para el gráfico: Obtener el conteo TOTAL de solicitudes por estado
+                    // NOTA: Estas consultas se ejecutan en el servidor Blade antes de enviar al navegador.
                     const data = {
-                        pendiente: {{ \App\Models\DocumentRequest::where('user_id', auth()->id())->where('estado', 'pendiente')->count() }},
-                        aprobado: {{ \App\Models\DocumentRequest::where('user_id', auth()->id())->where('estado', 'aprobado')->count() }},
-                        rechazado: {{ \App\Models\DocumentRequest::where('user_id', auth()->id())->where('estado', 'rechazado')->count() }}
+                        pendiente: {{ \App\Models\DocumentRequest::where('estado', 'pendiente')->count() }},
+                        aprobado: {{ \App\Models\DocumentRequest::where('estado', 'aprobado')->count() }},
+                        rechazado: {{ \App\Models\DocumentRequest::where('estado', 'rechazado')->count() }}
                     };
 
                     window.solicitudesChartInstance = new Chart(ctx, {
@@ -237,6 +238,11 @@
                                         font: {
                                             size: 12,
                                             family: 'Inter'
+                                        },
+                                        // Asegura que el color del texto sea visible en ambos modos
+                                        color: (context) => {
+                                            const isDarkMode = document.documentElement.classList.contains('dark');
+                                            return isDarkMode ? '#FFFFFF' : '#0D0D0D'; // Blanco en dark, Negro en light
                                         }
                                     }
                                 },
@@ -249,7 +255,7 @@
                                     callbacks: {
                                         label: function(context) {
                                             const total = context.dataset.data.reduce((a, b) => a + b, 0);
-                                            const percentage = ((context.parsed / total) * 100).toFixed(1);
+                                            const percentage = total > 0 ? ((context.parsed / total) * 100).toFixed(1) : 0; // Evita división por cero
                                             return `${context.label}: ${context.parsed} (${percentage}%)`;
                                         }
                                     }
@@ -266,7 +272,13 @@
 
             document.addEventListener('DOMContentLoaded', initializeChart);
             // Asegura que el gráfico se reinicialice si Livewire actualiza la página
-            document.addEventListener('livewire:navigated', initializeChart); 
+            document.addEventListener('livewire:navigated', initializeChart);
+            // También re-inicializar si el modo de tema cambia (si se implementa el cambio dinámico)
+            // Esto asume que tienes un mecanismo para detectar el cambio de la clase 'dark' en <html>
+            const observer = new MutationObserver(() => {
+                initializeChart();
+            });
+            observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
         </script>
     @endpush
 </x-layouts.app>
